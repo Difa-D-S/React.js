@@ -1,0 +1,33 @@
+*{
+  margin: 0;
+  padding:0;
+}
+
+.todo-input{
+  border: 2px solid gray;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  padding: 5px;
+}
+
+.list{
+  margin: 40px;
+  border: 2px solid green;
+  width: 300px;
+  padding: 10px;
+}
+
+Button{
+  border-radius: 0 8px 8px 0 !important;
+  margin-left: -10px;
+  margin-bottom: 10px;
+  height: 37px;
+}
+
+.list-value{
+  margin: 0 10px;
+}
+
+.flex{
+  display: flex;
+}
