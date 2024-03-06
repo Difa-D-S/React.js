@@ -4,7 +4,8 @@ import bird from '../assets/download.jpeg';
 const ExampleCarouselImage = () => {
   return (
     <>
-    <img src={bird} alt="bird" />
+    <img src={bird}  alt="bird" />
+    {/* <img src={travel} alt="bird" /> */}
     </>
   )
 }

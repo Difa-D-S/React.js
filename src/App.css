@@ -17,17 +17,40 @@
   padding: 10px;
 }
 
-Button{
+.arr-click{
   border-radius: 0 8px 8px 0 !important;
   margin-left: -10px;
   margin-bottom: 10px;
   height: 37px;
 }
 
+.del-list{
+  padding-left: 0;
+}
+
 .list-value{
-  margin: 0 10px;
+  list-style-type: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 10px;
 }
 
 .flex{
   display: flex;
 }
+
+.del-icon{
+  color:red;
+  background:transparent;
+  border: none;
+  padding: 2px 6px;
+}
+
+.btn-primary:hover{
+  background-color: red;
+  color:white;
+  --bs-btn-active-color: white;
+  --bs-btn-active-bg: red;
+}
+
