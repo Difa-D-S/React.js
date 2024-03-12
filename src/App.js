@@ -13,11 +13,16 @@ const App = () => {
   });
   const [arr, setArr] = useState([]);
 
+  // const [editing, setEditing] = useState(false);
+
   useEffect(() =>{ localStorage.setItem('todos', JSON.stringify(arr))
   }, [arr] );
 
+  const storedArr = JSON.parse(localStorage.getItem('todos'));
   useEffect( () => {
-    JSON.parse(localStorage.getItem('todos'));
+    if(storedArr) {
+      setArr(storedArr)
+    }
   }, [])
 
   const addTodoHandler = () => {
@@ -29,7 +34,15 @@ const App = () => {
     const newArr = arr.filter((item) => (item.id !== id))
     setArr(newArr)
   }
+
+  const handleEdit = (id) => {
+    const editing = arr.filter((item) => (item.id === id))
+    const edited = editing.map((editing) => editing.title);
+    setTodo({title: edited})
+  }
   
+  
+
 //   const addref = useRef(null);
 
 // useEffect(()=>{
@@ -38,20 +51,18 @@ const App = () => {
 
   return (
     <>
-    
+    {/* editing ? editing.title :  */}
     <div className='list'>
-    <div className='flex'>
+    <div className='flex'> 
     <input className="todo-input" type="text" placeholder="Enter your todo" value = {todo.title}
       onChange = {(e) => setTodo({id: Math.random(), title: e.target.value})}
-
       onKeyDown={(event) => {
         if(event.key === "Enter") {
           addTodoHandler()
         }
       }} ></input>
 
-    <Button className="arr-click" variant="danger" onClick={
-      () => setArr([...arr, todo])}> Add todo </Button>
+    <Button className="arr-click" variant="danger" onClick={addTodoHandler}> Add todo </Button>
     </div>
                 {/* <button 
                   onClick = {() => {
@@ -76,7 +87,7 @@ const App = () => {
           <span> {item.title} </span>
         </div>
         <div>
-          <Button className="del-icon"> <FontAwesomeIcon icon={faEdit}/> </Button> 
+          <Button className="del-icon" onClick={() => handleEdit(item.id)}> <FontAwesomeIcon icon={faEdit}/> </Button> 
           <Button className="del-icon" onClick={() => handleDelete(item.id)}> 
               <FontAwesomeIcon icon={faTrash} /> </Button> 
         </div>
