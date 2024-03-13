@@ -51,7 +51,7 @@ const App = () => {
 
   return (
     <>
-    {/* editing ? editing.title :  */}
+    
     <div className='list'>
     <div className='flex'> 
     <input className="todo-input" type="text" placeholder="Enter your todo" value = {todo.title}
