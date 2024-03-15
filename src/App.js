@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import Button from 'react-bootstrap/Button';
 import './App.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -13,7 +13,9 @@ const App = () => {
   });
   const [arr, setArr] = useState([]);
 
-  // const [editing, setEditing] = useState(false);
+  const [editing, setEditing] = useState([]);
+
+
 
   useEffect(() =>{ localStorage.setItem('todos', JSON.stringify(arr))
   }, [arr] );
@@ -36,17 +38,29 @@ const App = () => {
   }
 
   const handleEdit = (id) => {
-    const editing = arr.filter((item) => (item.id === id))
-    const edited = editing.map((editing) => editing.title);
-    setTodo({title: edited})
+    // const editing = arr.filter((item) => item.id === id);
+    // const edited = editing.map((editing) => editing.title);
+    // setTodo({title: edited})
+    
+    const findTodo = arr.find((todo) => todo.id === id);
+    setTodo(findTodo);
+    console.log(setEditing(...editing, arr, todo));
+    
   }
   
-  
+  // useEffect( () => {
+  //   if(editing) {
+  //     setTodo(setEditing.title);
+  //   }
+  //   else{
+  //     setTodo('');
+  //   }
+  // }, [setTodo, editing])
 
 //   const addref = useRef(null);
 
 // useEffect(()=>{
-//   addTodoHandler.current.focus(addref)
+//   addref.current.focus();
 // })
 
   return (
@@ -62,7 +76,7 @@ const App = () => {
         }
       }} ></input>
 
-    <Button className="arr-click" variant="danger" onClick={addTodoHandler}> Add todo </Button>
+    <Button className="arr-click" variant="danger" onClick={addTodoHandler}> Add Todo </Button>
     </div>
                 {/* <button 
                   onClick = {() => {
