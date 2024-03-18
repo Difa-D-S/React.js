@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useRef} from 'react';
+import React, {useEffect, useState} from 'react';
 import Button from 'react-bootstrap/Button';
 import './App.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -12,9 +12,7 @@ const App = () => {
     completed:false
   });
   const [arr, setArr] = useState([]);
-
-  const [editing, setEditing] = useState([]);
-
+  const [show, setShow] = useState(true);
 
 
   useEffect(() =>{ localStorage.setItem('todos', JSON.stringify(arr))
@@ -37,17 +35,29 @@ const App = () => {
     setArr(newArr)
   }
 
-  const handleEdit = (id) => {
-    // const editing = arr.filter((item) => item.id === id);
-    // const edited = editing.map((editing) => editing.title);
-    // setTodo({title: edited})
-    
-    const findTodo = arr.find((todo) => todo.id === id);
+  const handleEdit = (id) => { 
+    const findTodo = arr.find((todo) => todo.id === id ? handleDelete(id) : {...arr});
     setTodo(findTodo);
-    console.log(setEditing(...editing, arr, todo));
+    setShow(false);
+
     
+    // console.log(setEditing(...editing, arr, todo));
+
+            // const editing = arr.filter((item) => item.id === id);
+            // const edited = editing.map((editing) => editing.title);
+            // setTodo({title: edited})
   }
-  
+
+  const startEditing = () => {
+    addTodoHandler();
+  }
+
+  // const update = (id, title) => {
+  //   setArr(arr.map( (todo) => todo.id === id ? {...arr, title: title} : arr))
+  // }
+
+
+
   // useEffect( () => {
   //   if(editing) {
   //     setTodo(setEditing.title);
@@ -76,7 +86,14 @@ const App = () => {
         }
       }} ></input>
 
-    <Button className="arr-click" variant="danger" onClick={addTodoHandler}> Add Todo </Button>
+    {show ? ( 
+      <>
+      <Button className="arr-click" variant="danger" onClick={addTodoHandler}> Add </Button>
+      </> ) : (
+        <>
+        <Button className="arr-click" variant="danger" onClick={startEditing}> Edit </Button>
+        </>
+      ) }
     </div>
                 {/* <button 
                   onClick = {() => {
