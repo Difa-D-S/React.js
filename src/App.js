@@ -1,8 +1,9 @@
-import React, {useEffect, useState} from 'react';
-import Button from 'react-bootstrap/Button';
+import React, {useEffect, useRef, useState} from 'react';
 import './App.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons'
+import Addtext from './component/Addtext';
+import Buttoncomponent from './component/Buttoncomponent';
+import TodoList from './component/TodoList';
+// import Button from 'react-bootstrap/Button'
 
 
 const App = () => {
@@ -11,23 +12,16 @@ const App = () => {
     title:'',
     completed:false
   });
-  const [arr, setArr] = useState([]);
+  const [arr, setArr] = useState([...JSON.parse(localStorage.getItem('todos'))]);
+ 
   const [show, setShow] = useState(true);
-
 
   useEffect(() =>{ localStorage.setItem('todos', JSON.stringify(arr))
   }, [arr] );
 
-  const storedArr = JSON.parse(localStorage.getItem('todos'));
-  useEffect( () => {
-    if(storedArr) {
-      setArr(storedArr)
-    }
-  }, [])
-
   const addTodoHandler = () => {
     setArr([...arr, todo]);
-    setTodo({id:'', title:''});
+    setTodo({id:'', title:'', completed: false});
   }
 
   const handleDelete = (id) => {
@@ -36,26 +30,39 @@ const App = () => {
   }
 
   const handleEdit = (id) => { 
-    const findTodo = arr.find((todo) => todo.id === id ? handleDelete(id) : {...arr});
+    const findTodo = arr.find((todo) => todo.id === id);
     setTodo(findTodo);
     setShow(false);
-
-    
-    // console.log(setEditing(...editing, arr, todo));
-
-            // const editing = arr.filter((item) => item.id === id);
-            // const edited = editing.map((editing) => editing.title);
-            // setTodo({title: edited})
   }
 
   const startEditing = () => {
     addTodoHandler();
   }
 
+  const addTodoInput = useRef(null);
+
+  useEffect(()=>{
+    addTodoInput.current.focus();
+  })
+  
+  
+
   // const update = (id, title) => {
   //   setArr(arr.map( (todo) => todo.id === id ? {...arr, title: title} : arr))
   // }
 
+    // console.log(setEditing(...editing, arr, todo));
+
+            // const editing = arr.filter((item) => item.id === id);
+            // const edited = editing.map((editing) => editing.title);
+            // setTodo({title: edited})
+  
+  // const storedArr = JSON.parse(localStorage.getItem('todos'));
+  // useEffect( () => {
+  //   if(storedArr) {
+  //     setArr(storedArr)
+  //   }
+  // }, [])
 
 
   // useEffect( () => {
@@ -67,70 +74,29 @@ const App = () => {
   //   }
   // }, [setTodo, editing])
 
-//   const addref = useRef(null);
+  const inputOnChange = (e) => {
+    setTodo({
+      id: Math.random(), 
+      title: e.target.value, 
+      completed:false
+    })}
 
-// useEffect(()=>{
-//   addref.current.focus();
-// })
-
+  const onKeyDown = (event) => {
+    if(event.key === "Enter") {
+      addTodoHandler()
+    }
+  }
   return (
     <>
-    
-    <div className='list'>
-    <div className='flex'> 
-    <input className="todo-input" type="text" placeholder="Enter your todo" value = {todo.title}
-      onChange = {(e) => setTodo({id: Math.random(), title: e.target.value})}
-      onKeyDown={(event) => {
-        if(event.key === "Enter") {
-          addTodoHandler()
-        }
-      }} ></input>
-
-    {show ? ( 
-      <>
-      <Button className="arr-click" variant="danger" onClick={addTodoHandler}> Add </Button>
-      </> ) : (
-        <>
-        <Button className="arr-click" variant="danger" onClick={startEditing}> Edit </Button>
-        </>
-      ) }
-    </div>
-                {/* <button 
-                  onClick = {() => {
-                    console.log(arr);
-                    }}
-                    > array </button> */}
-
-    <ul className='del-list'>
-      {arr.map((item) => (
-        
-      <li key={item.id} className='list-value'> 
-        <div>
-          <input type='checkbox' className='checkbox' checked={item.completed} onChange={
-            () => {
-              if(item.id && item.completed){
-              item.completed = !item.completed;
-                // console.log(item.completed = !item.completed);}
-              }
-            }
-            }
-          ></input>
-          <span> {item.title} </span>
-        </div>
-        <div>
-          <Button className="del-icon" onClick={() => handleEdit(item.id)}> <FontAwesomeIcon icon={faEdit}/> </Button> 
-          <Button className="del-icon" onClick={() => handleDelete(item.id)}> 
-              <FontAwesomeIcon icon={faTrash} /> </Button> 
-        </div>
-        
-      </li>
-
-    ))}
-    </ul>
-    </div>
+      <div className='list'>
+        <div className='flex'> 
+          <Addtext todo={todo} setTodo={setTodo} inputOnChange={inputOnChange} addTodoHandler={addTodoHandler} addTodoInput={addTodoInput} onKeyDown={onKeyDown}/>
+          <Buttoncomponent show={show} startEditing={startEditing} addTodoHandler={addTodoHandler}/>
+        </div>   
+          <TodoList arr={arr} handleEdit={handleEdit} handleDelete={handleDelete}/>
+      </div>
     </>
   );
 }
-
 
 export default App;
