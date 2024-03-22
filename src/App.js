@@ -45,6 +45,18 @@ const App = () => {
     addTodoInput.current.focus();
   })
   
+  const inputOnChange = (e) => {
+    setTodo({
+      id: Math.random(), 
+      title: e.target.value, 
+      completed:false
+    })}
+
+  const onKeyDown = (event) => {
+    if(event.key === "Enter") {
+      addTodoHandler()
+    }
+  }
   
 
   // const update = (id, title) => {
@@ -74,18 +86,7 @@ const App = () => {
   //   }
   // }, [setTodo, editing])
 
-  const inputOnChange = (e) => {
-    setTodo({
-      id: Math.random(), 
-      title: e.target.value, 
-      completed:false
-    })}
-
-  const onKeyDown = (event) => {
-    if(event.key === "Enter") {
-      addTodoHandler()
-    }
-  }
+ 
   return (
     <>
       <div className='list'>
@@ -100,3 +101,13 @@ const App = () => {
 }
 
 export default App;
+
+// const todoReducer = copy the code from w3
+
+
+//const [todo, dispatch] = useReducer(todoReducer, initialvalue);
+
+// const action= {
+//   type:'',
+//   payload: pass panura id ah kudukanum
+// }
