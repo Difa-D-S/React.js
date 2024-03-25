@@ -3,22 +3,26 @@ import React from 'react'
 import styled from 'styled-components'
 
 const Buttonadd = styled.button`
-  border-radius: 0 8px 8px 0 !important;
+  border:none;
+  border-radius: 0px 5px 5px 0px;
   margin-left: -10px;
   margin-bottom: 10px;
   height: 37px;
+  width: 80px;
+  background-color: black;
+  color:white;
   
   &:hover {
-    background-color: red;
-  color:white;
+    background-color: gray;
+    color:white;
   }`
-
+                                    
 
 
 const AddBtn = ({addTodoHandler}) => {
   return (
     <>
-        <Buttonadd className="arr-click" variant="danger" onClick={addTodoHandler}> Add </Buttonadd>
+        <Buttonadd onClick={addTodoHandler}> Add </Buttonadd>
     </>
   )
 }

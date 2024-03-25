@@ -2,17 +2,17 @@ import React from 'react'
 
 import ListItem from './ListItem'
 
-const TodoList = ({arr, handleEdit, handleDelete}) => {
+const TodoList = ({arr, handleEdit, handleDelete, checkBoxOnChange}) => {
   return (
-    <div>
+    <>
         <ul className='del-list'>
       {arr.map((item) => (
         
-      <ListItem item={item} handleEdit={handleEdit} handleDelete={handleDelete}/>
+      <ListItem item={item} handleEdit={handleEdit} handleDelete={handleDelete} checkBoxOnChange={checkBoxOnChange}/>
 
     ))}
     </ul>
-    </div>
+    </>
   )
 }
 

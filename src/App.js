@@ -1,10 +1,26 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import './App.css';
 import Addtext from './component/Addtext';
 import Buttoncomponent from './component/Buttoncomponent';
 import TodoList from './component/TodoList';
 // import Button from 'react-bootstrap/Button'
 
+// const todoReducer = (state, action) => {
+//   if(action.type === 'ADD'){
+//     return [...state, action.payload]
+//   } else if(action.type === 'COMPLETE') {
+//     return state.map((item) => {
+//       if(item.id === action.payload){
+//         return {...item, completed: !item.completed}
+//           // console.log(item.completed = !item.completed);
+//         } else{
+//           return item
+//         }
+//     })
+    
+//   }
+  
+// }
 
 const App = () => {
   const [todo, setTodo] = useState({
@@ -12,14 +28,21 @@ const App = () => {
     title:'',
     completed:false
   });
+
   const [arr, setArr] = useState([...JSON.parse(localStorage.getItem('todos'))]);
  
   const [show, setShow] = useState(true);
 
   useEffect(() =>{ localStorage.setItem('todos', JSON.stringify(arr))
   }, [arr] );
+ 
+  // const [todos, dispatch] = useReducer(todoReducer, []);
+ 
+  // const[editedTodo,setEditedTodo] = useState(null)
+
 
   const addTodoHandler = () => {
+    // dispatch({type: 'ADD', payload:todo})
     setArr([...arr, todo]);
     setTodo({id:'', title:'', completed: false});
   }
@@ -29,76 +52,46 @@ const App = () => {
     setArr(newArr)
   }
 
-  const handleEdit = (id) => { 
-    const findTodo = arr.find((todo) => todo.id === id);
-    setTodo(findTodo);
+  const handleEdit = (id, newTitle) => {
+    const updatedTodos = arr.map((todo) =>
+      todo.id === id ?  { ...todo, title: newTitle } : todo
+    );
+    setTodo(updatedTodos);
+    // setEditedTodo(null); // Reset the editedTodo state after editing
+  };
+
+  const startEditing = (todo) => {
+    // setEditedTodo(todo);
     setShow(false);
-  }
+  };
 
-  const startEditing = () => {
-    addTodoHandler();
-  }
-
-  const addTodoInput = useRef(null);
-
-  useEffect(()=>{
-    addTodoInput.current.focus();
-  })
-  
-  const inputOnChange = (e) => {
-    setTodo({
-      id: Math.random(), 
-      title: e.target.value, 
-      completed:false
-    })}
-
-  const onKeyDown = (event) => {
+  const onkeyDown = (event) => {
     if(event.key === "Enter") {
       addTodoHandler()
     }
   }
-  
 
-  // const update = (id, title) => {
-  //   setArr(arr.map( (todo) => todo.id === id ? {...arr, title: title} : arr))
-  // }
-
-    // console.log(setEditing(...editing, arr, todo));
-
-            // const editing = arr.filter((item) => item.id === id);
-            // const edited = editing.map((editing) => editing.title);
-            // setTodo({title: edited})
-  
-  // const storedArr = JSON.parse(localStorage.getItem('todos'));
-  // useEffect( () => {
-  //   if(storedArr) {
-  //     setArr(storedArr)
-  //   }
-  // }, [])
-
-
-  // useEffect( () => {
-  //   if(editing) {
-  //     setTodo(setEditing.title);
-  //   }
-  //   else{
-  //     setTodo('');
-  //   }
-  // }, [setTodo, editing])
-
+  const checkBoxOnChange = (id) => {
+    // dispatch({type:'COMPLETE' , payload: id})
+    const updatedTodos = arr.map((todo) =>
+      todo.id === id ? { ...todo, completed: !todo.completed } : todo
+    );
+    setArr(updatedTodos);
+  };
  
   return (
     <>
       <div className='list'>
         <div className='flex'> 
-          <Addtext todo={todo} setTodo={setTodo} inputOnChange={inputOnChange} addTodoHandler={addTodoHandler} addTodoInput={addTodoInput} onKeyDown={onKeyDown}/>
-          <Buttoncomponent show={show} startEditing={startEditing} addTodoHandler={addTodoHandler}/>
+          <Addtext todo={todo} setTodo={setTodo} onKeyDown={onkeyDown}/>
+          <Buttoncomponent show={show} startEditing={startEditing} addTodoHandler={addTodoHandler} />
         </div>   
-          <TodoList arr={arr} handleEdit={handleEdit} handleDelete={handleDelete}/>
+          <TodoList arr={arr} handleEdit={handleEdit} handleDelete={handleDelete} checkBoxOnChange={checkBoxOnChange}/>
       </div>
     </>
   );
 }
+  
 
 export default App;
 

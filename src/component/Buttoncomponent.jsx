@@ -7,12 +7,12 @@ const Buttoncomponent = ({show, addTodoHandler, startEditing}) => {
   return (
     <>
         {show ? ( 
-      <>
+      <div>
         <AddBtn addTodoHandler={addTodoHandler} />
-      </> ) : (
-        <>
+      </div> ) : (
+        <div>
         <EditBtn startEditing={startEditing} />
-        </>
+        </div>
       ) }
     </>
   )

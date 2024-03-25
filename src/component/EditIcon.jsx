@@ -6,7 +6,7 @@ import { faEdit } from '@fortawesome/free-solid-svg-icons'
 const EditIcon = ({item, handleEdit}) => {
   return (
     <>
-        <Button className="del-icon" onClick={() => handleEdit(item.id)}> <FontAwesomeIcon icon={faEdit}/> </Button> 
+        <Button className="del-icon" onClick={() => handleEdit(item.id, item.title)}> <FontAwesomeIcon icon={faEdit}/> </Button> 
     </>
   )
 }

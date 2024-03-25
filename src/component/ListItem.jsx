@@ -2,12 +2,12 @@ import React from 'react'
 import TodoCheckBox from './TodoCheckBox'
 import EditDeleteBtn from './EditDeleteBtn'
 
-const ListItem = ({item, handleEdit, handleDelete}) => {
+const ListItem = ({item, handleEdit, handleDelete, checkBoxOnChange}) => {
   return (
     <div>
         <li key={item.id} className='list-value'> 
             <div>
-                <TodoCheckBox item={item}/> <span> {item.title} </span>
+                <TodoCheckBox item={item} checkBoxOnChange={checkBoxOnChange}/> <span> {item.title} </span>
             </div>
 
             <div>

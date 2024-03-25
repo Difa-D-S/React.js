@@ -1,17 +1,10 @@
 import React from 'react'
 
-const TodoCheckBox = ({item}) => {
-
-    const checkBoxOnChange = () => {
-        if(item.id && item.completed){
-        item.completed = !item.completed;
-          // console.log(item.completed = !item.completed);}
-        }
-      }
+const TodoCheckBox = ({item, checkBoxOnChange}) => {
 
   return (
     <>
-        <input type='checkbox' className='checkbox' checked={item.completed} onChange={checkBoxOnChange}></input>
+        <input type='checkbox' className='checkbox' checked={item.completed} onChange={() => checkBoxOnChange(item.id)}></input>
     </>
   )
 }

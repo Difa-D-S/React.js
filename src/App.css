@@ -4,7 +4,7 @@
 }
 
 .todo-input{
-  border: 2px solid gray;
+  border: 2px solid black;
   border-radius: 8px;
   margin-bottom: 10px;
   padding: 5px;
@@ -17,12 +17,12 @@
   padding: 10px;
 }
 
-.arr-click{
+/* .arr-click{
   border-radius: 0 8px 8px 0 !important;
   margin-left: -10px;
   margin-bottom: 10px;
   height: 37px;
-}
+} */
 
 .del-list{
   padding-left: 0;
@@ -38,6 +38,8 @@
 
 .flex{
   display: flex;
+  justify-content: center;
+  align-items: centers;
 }
 
 .del-icon{
