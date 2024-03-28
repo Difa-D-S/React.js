@@ -2,19 +2,26 @@ import React from 'react'
 import TodoCheckBox from './TodoCheckBox'
 import EditDeleteBtn from './EditDeleteBtn'
 
-const ListItem = ({item, handleEdit, handleDelete, checkBoxOnChange}) => {
+const ListItem = ({item, startEditing, handleDelete, checkBoxOnChange}) => {
   return (
-    <div>
+    <>
         <li key={item.id} className='list-value'> 
             <div>
-                <TodoCheckBox item={item} checkBoxOnChange={checkBoxOnChange}/> <span> {item.title} </span>
+                <TodoCheckBox 
+                  item={item} 
+                  checkBoxOnChange={checkBoxOnChange}/> 
+                  <span> {item.title} </span>
             </div>
-
+            
             <div>
-                <EditDeleteBtn item={item} handleEdit={handleEdit} handleDelete={handleDelete}/>
+                <EditDeleteBtn 
+                  item={item} 
+                  startEditing={startEditing} 
+                  handleDelete={handleDelete}
+                  />
             </div>
         </li>
-    </div>
+    </>
   )
 }
 

@@ -2,10 +2,10 @@ import React from 'react'
 import EditIcon from './EditIcon'
 import DeleteIcon from './DeleteIcon'
 
-const EditDeleteBtn = ({item, handleEdit, handleDelete}) => {
+const EditDeleteBtn = ({item,startEditing, handleDelete}) => {
   return (
     <>
-        <EditIcon item={item} handleEdit = {handleEdit}/>
+        <EditIcon item={item} startEditing={startEditing}/>
         <DeleteIcon item={item} handleDelete = {handleDelete}/>
     </>
   )

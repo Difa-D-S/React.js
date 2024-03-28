@@ -3,7 +3,7 @@ import AddBtn from './AddBtn'
 import EditBtn from './EditBtn'
 
 
-const Buttoncomponent = ({show, addTodoHandler, startEditing}) => {
+const Buttoncomponent = ({show,item, addTodoHandler, handleEdit}) => {
   return (
     <>
         {show ? ( 
@@ -11,7 +11,7 @@ const Buttoncomponent = ({show, addTodoHandler, startEditing}) => {
         <AddBtn addTodoHandler={addTodoHandler} />
       </div> ) : (
         <div>
-        <EditBtn startEditing={startEditing} />
+        <EditBtn handleEdit={handleEdit} item = {item}/>
         </div>
       ) }
     </>

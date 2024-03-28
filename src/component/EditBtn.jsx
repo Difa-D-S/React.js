@@ -17,10 +17,10 @@ const Buttonedit = styled.button`
     color:white;
   }`
 
-const EditBtn = ({startEditing}) => {
+const EditBtn = ({item, handleEdit}) => {
   return (
     <>
-        <Buttonedit onClick={startEditing}> Edit </Buttonedit>
+        <Buttonedit onClick={() => handleEdit(item.id)} > Edit </Buttonedit>
     </>
   )
 }

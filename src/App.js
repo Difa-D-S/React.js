@@ -3,20 +3,21 @@ import './App.css';
 import Addtext from './component/Addtext';
 import Buttoncomponent from './component/Buttoncomponent';
 import TodoList from './component/TodoList';
+// import EditDeleteBtn from './component/EditDeleteBtn';
 // import Button from 'react-bootstrap/Button'
 
 // const todoReducer = (state, action) => {
 //   if(action.type === 'ADD'){
 //     return [...state, action.payload]
 //   } else if(action.type === 'COMPLETE') {
-//     return state.map((item) => {
+// return state.map((item) => {
 //       if(item.id === action.payload){
 //         return {...item, completed: !item.completed}
 //           // console.log(item.completed = !item.completed);
 //         } else{
 //           return item
 //         }
-//     })
+//     })    
     
 //   }
   
@@ -38,7 +39,7 @@ const App = () => {
  
   // const [todos, dispatch] = useReducer(todoReducer, []);
  
-  // const[editedTodo,setEditedTodo] = useState(null)
+  const[editedTodo,setEditedTodo] = useState({})
 
 
   const addTodoHandler = () => {
@@ -52,24 +53,19 @@ const App = () => {
     setArr(newArr)
   }
 
-  const handleEdit = (id, newTitle) => {
-    const updatedTodos = arr.map((todo) =>
-      todo.id === id ?  { ...todo, title: newTitle } : todo
+  const handleEdit = (id) => {
+    const updatedTodos =arr.map((todo) =>
+      todo.id === id ?  { id: todo.id, title: todo.title, completed: todo.completed } : todo
     );
     setTodo(updatedTodos);
-    // setEditedTodo(null); // Reset the editedTodo state after editing
+    setShow(true);
   };
 
-  const startEditing = (todo) => {
-    // setEditedTodo(todo);
+  const startEditing = (id) => {
+    const selected = arr.find((todo) => todo.id === id)
+    setEditedTodo(selected);
     setShow(false);
   };
-
-  const onkeyDown = (event) => {
-    if(event.key === "Enter") {
-      addTodoHandler()
-    }
-  }
 
   const checkBoxOnChange = (id) => {
     // dispatch({type:'COMPLETE' , payload: id})
@@ -83,10 +79,15 @@ const App = () => {
     <>
       <div className='list'>
         <div className='flex'> 
-          <Addtext todo={todo} setTodo={setTodo} onKeyDown={onkeyDown}/>
-          <Buttoncomponent show={show} startEditing={startEditing} addTodoHandler={addTodoHandler} />
+          <Addtext todo={todo} setTodo={setTodo} arr={arr} setArr={setArr} editedTodo={editedTodo} setEditedTodo={setEditedTodo}/>
+          <Buttoncomponent 
+            show={show} 
+            item={arr} 
+            handleEdit={handleEdit} 
+            addTodoHandler={addTodoHandler} />
         </div>   
-          <TodoList arr={arr} handleEdit={handleEdit} handleDelete={handleDelete} checkBoxOnChange={checkBoxOnChange}/>
+          <TodoList arr={arr} startEditing={startEditing} handleDelete={handleDelete} checkBoxOnChange={checkBoxOnChange}
+            editedTodo={editedTodo} setEditedTodo={setEditedTodo}/>
       </div>
     </>
   );

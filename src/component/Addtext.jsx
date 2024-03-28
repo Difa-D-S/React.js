@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react'
 
-const Addtext = ({todo, setTodo, onKeyDown}) => {
+const Addtext = ({todo, setTodo, arr, setArr, editedTodo, setEditedTodo}) => {
 
   const inputOnChange = (e) => {
     setTodo({
@@ -8,6 +8,13 @@ const Addtext = ({todo, setTodo, onKeyDown}) => {
       title: e.target.value, 
       completed:false
     })}
+
+  const onkeyDown = (event) => {
+    if(event.key === "Enter") {
+      setArr([...arr, todo]);
+      setTodo({id:'', title:'', completed: false});
+    }
+  }
 
   const addTodoInput = useRef(null);
 
@@ -17,8 +24,8 @@ const Addtext = ({todo, setTodo, onKeyDown}) => {
 
   return (
     <>
-        <input className="todo-input" type="text" placeholder="Enter your todo" value = {todo.title}
-      onChange = {inputOnChange} onKeyDown={onKeyDown} ref={addTodoInput}></input>
+        <input className="todo-input" type="text" placeholder="Enter your todo" name='todo' value = {editedTodo.title}
+      onChange = {inputOnChange} onKeyDown={onkeyDown} ref={addTodoInput}></input>
     </>
   )
 }
