@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useReducer, useState} from 'react';
 import './App.css';
 import Addtext from './component/Addtext';
 import Buttoncomponent from './component/Buttoncomponent';
@@ -17,20 +17,28 @@ import TodoList from './component/TodoList';
 //         } else{
 //           return item
 //         }
-//     })    
-    
+//     })     
 //   }
-  
 // }
 
 const App = () => {
-  const [todo, setTodo] = useState({
-    id:'',
-    title:'',
-    completed:false
-  });
 
-  const [arr, setArr] = useState([...JSON.parse(localStorage.getItem('todos'))]);
+   const [todo, setTodo] = useState({
+        id:'',
+        title:'',
+        completed:false
+      });
+
+      const [arr, setArr] = useState([...JSON.parse(localStorage.getItem('todos'))]);
+
+      useEffect(() =>{ localStorage.setItem('todos', JSON.stringify(arr))
+    }, [arr] );
+
+      const addTodoHandler = () => {
+        // dispatch({type: 'ADD', payload:todos})
+        setArr([...arr, todo]);
+        setTodo({id:'', title:'', completed: false});
+      }
  
   const [show, setShow] = useState(true);
 
@@ -41,21 +49,14 @@ const App = () => {
  
   const[editedTodo,setEditedTodo] = useState({})
 
-
-  const addTodoHandler = () => {
-    // dispatch({type: 'ADD', payload:todo})
-    setArr([...arr, todo]);
-    setTodo({id:'', title:'', completed: false});
-  }
-
   const handleDelete = (id) => {
     const newArr = arr.filter((item) => (item.id !== id))
     setArr(newArr)
   }
 
-  const handleEdit = (id) => {
+  const handleEdit = () => {
     const updatedTodos =arr.map((todo) =>
-      todo.id === id ?  { id: todo.id, title: todo.title, completed: todo.completed } : todo
+      editedTodo.id === todo.id ?  { id: editedTodo.id, title: editedTodo.title, completed: editedTodo.completed } : todo
     );
     setTodo(updatedTodos);
     setShow(true);
@@ -63,7 +64,7 @@ const App = () => {
 
   const startEditing = (id) => {
     const selected = arr.find((todo) => todo.id === id)
-    setEditedTodo(selected);
+    setTodo(selected);
     setShow(false);
   };
 
@@ -79,12 +80,22 @@ const App = () => {
     <>
       <div className='list'>
         <div className='flex'> 
-          <Addtext todo={todo} setTodo={setTodo} arr={arr} setArr={setArr} editedTodo={editedTodo} setEditedTodo={setEditedTodo}/>
+          <Addtext 
+            todo={todo} 
+            setTodo={setTodo} 
+            arr={arr} 
+            setArr={setArr} 
+            editedTodo={editedTodo} 
+            setEditedTodo={setEditedTodo}/>
+
           <Buttoncomponent 
             show={show} 
             item={arr} 
             handleEdit={handleEdit} 
             addTodoHandler={addTodoHandler} />
+
+            {/* <Addtext/>
+            <Buttoncomponent/> */}
         </div>   
           <TodoList arr={arr} startEditing={startEditing} handleDelete={handleDelete} checkBoxOnChange={checkBoxOnChange}
             editedTodo={editedTodo} setEditedTodo={setEditedTodo}/>
