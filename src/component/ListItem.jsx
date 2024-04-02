@@ -2,7 +2,7 @@ import React from 'react'
 import TodoCheckBox from './TodoCheckBox'
 import EditDeleteBtn from './EditDeleteBtn'
 
-const ListItem = ({item, startEditing, handleDelete, checkBoxOnChange}) => {
+const ListItem = ({item, editId, inputValue, setInputValue, startEditing, handleDelete, checkBoxOnChange}) => {
   return (
     <>
         <li key={item.id} className='list-value'> 
@@ -10,7 +10,17 @@ const ListItem = ({item, startEditing, handleDelete, checkBoxOnChange}) => {
                 <TodoCheckBox 
                   item={item} 
                   checkBoxOnChange={checkBoxOnChange}/> 
-                  <span> {item.title} </span>
+               
+              {editId === item.id ? (
+                <input
+                  type='text'
+                  value={inputValue}
+                  onChange={(e) => setInputValue(e.target.value)}
+                  // onBlur={() => handleSaveEdit(item.id)}
+                />
+              ) : (
+                <span>{item.title}</span>
+              )}
             </div>
             
             <div>

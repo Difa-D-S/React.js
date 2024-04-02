@@ -20,7 +20,7 @@ const Buttonedit = styled.button`
 const EditBtn = ({item, handleEdit}) => {
   return (
     <>
-        <Buttonedit onClick={() => handleEdit()} > Edit </Buttonedit>
+        <Buttonedit onClick={() => handleEdit(item.id)} > Edit </Buttonedit>
     </>
   )
 }

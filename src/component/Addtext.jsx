@@ -1,22 +1,13 @@
 import React, { useContext, useEffect, useRef } from 'react'
 // import {context} from '../Context'
 
-const Addtext = ({todo, setTodo, arr, setArr}) => {
+const Addtext = ({inputValue, setInputValue, addTodoHandler}) => {
 
   // const values = useContext(context)
 
-  const onchange = (e) => {
-    setTodo({
-      id: Math.random() * 20000,
-      title: e.target.value,
-      completed:false
-    })  
-    }
-
   const onkeyDown = (event) => {
     if(event.key === "Enter") {
-      setArr([...arr, todo]);
-      setTodo({id:'', title:'', completed: false});
+      addTodoHandler();
     }
   }
 
@@ -28,8 +19,8 @@ const Addtext = ({todo, setTodo, arr, setArr}) => {
 
   return (
     <>
-        <input className="todo-input" type="text" placeholder="Enter your todo" name='todo' value = {todo.title}
-         onChange={onchange} onKeyDown={onkeyDown} ref={addTodoInput}></input>
+        <input className="todo-input" type="text" placeholder="Enter your todo" value = {inputValue}
+         onChange={(e) => setInputValue(e.target.value)} onKeyDown={onkeyDown} ref={addTodoInput}></input>
     </>
   )
 }

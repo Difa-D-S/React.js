@@ -6,99 +6,89 @@ import TodoList from './component/TodoList';
 // import EditDeleteBtn from './component/EditDeleteBtn';
 // import Button from 'react-bootstrap/Button'
 
-// const todoReducer = (state, action) => {
-//   if(action.type === 'ADD'){
-//     return [...state, action.payload]
-//   } else if(action.type === 'COMPLETE') {
-// return state.map((item) => {
-//       if(item.id === action.payload){
-//         return {...item, completed: !item.completed}
-//           // console.log(item.completed = !item.completed);
-//         } else{
-//           return item
-//         }
-//     })     
-//   }
-// }
+
+const todoReducer = (state, action) => {
+  switch (action.type) {
+    case 'ADD':
+      return [...state, action.payload];
+    case 'COMPLETE':
+      return state.map((item) =>
+        item.id === action.payload ? { ...item, completed: !item.completed } : item
+      );
+    case 'EDIT':
+      return state.map((item) =>
+        item.id === action.payload.id ? { ...item, title: action.payload.title } : item
+      );
+    case 'DELETE':
+      return state.filter((item) => item.id !== action.payload);
+    default:
+      return state;
+  }
+};
 
 const App = () => {
 
-   const [todo, setTodo] = useState({
-        id:'',
-        title:'',
-        completed:false
-      });
+  const [todos, dispatch] = useReducer(todoReducer, JSON.parse(localStorage.getItem('todos')) || []);
 
-      const [arr, setArr] = useState([...JSON.parse(localStorage.getItem('todos'))]);
-
-      useEffect(() =>{ localStorage.setItem('todos', JSON.stringify(arr))
-    }, [arr] );
-
-      const addTodoHandler = () => {
-        // dispatch({type: 'ADD', payload:todos})
-        setArr([...arr, todo]);
-        setTodo({id:'', title:'', completed: false});
-      }
+  const [inputValue, setInputValue] = useState([])
  
+  const [editId, setEditId] = useState(null);
+
   const [show, setShow] = useState(true);
+  
+  useEffect(() =>{ localStorage.setItem('todos', JSON.stringify(todos))}, [todos] );
 
-  useEffect(() =>{ localStorage.setItem('todos', JSON.stringify(arr))
-  }, [arr] );
- 
-  // const [todos, dispatch] = useReducer(todoReducer, []);
- 
-  const[editedTodo,setEditedTodo] = useState({})
-
-  const handleDelete = (id) => {
-    const newArr = arr.filter((item) => (item.id !== id))
-    setArr(newArr)
+  const addTodoHandler = () => {
+    dispatch({type: 'ADD', payload: {id: Math.random() * 20000, title: [inputValue], completed:false }})
   }
 
-  const handleEdit = () => {
-    const updatedTodos =arr.map((todo) =>
-      editedTodo.id === todo.id ?  { id: editedTodo.id, title: editedTodo.title, completed: editedTodo.completed } : todo
-    );
-    setTodo(updatedTodos);
-    setShow(true);
-  };
-
-  const startEditing = (id) => {
-    const selected = arr.find((todo) => todo.id === id)
-    setTodo(selected);
-    setShow(false);
-  };
-
+  const handleDelete = (id) => {
+    dispatch({type:"DELETE", payload: id})
+  }
+  
   const checkBoxOnChange = (id) => {
-    // dispatch({type:'COMPLETE' , payload: id})
-    const updatedTodos = arr.map((todo) =>
-      todo.id === id ? { ...todo, completed: !todo.completed } : todo
-    );
-    setArr(updatedTodos);
+    dispatch({type:'COMPLETE' , payload: id})
   };
- 
+
+  const handleEditTodo = (id, title) => {
+    setEditId(id);
+    setInputValue(title);
+    setShow(false)
+  };
+
+  const handleSaveEdit = (id) => {
+    if (inputValue.trim() !== '') {
+      dispatch({ type: 'EDIT', payload: { id, title: inputValue } });
+      setInputValue('');
+      setShow(true)
+      setEditId(null);
+    }
+  };
+
   return (
     <>
       <div className='list'>
         <div className='flex'> 
           <Addtext 
-            todo={todo} 
-            setTodo={setTodo} 
-            arr={arr} 
-            setArr={setArr} 
-            editedTodo={editedTodo} 
-            setEditedTodo={setEditedTodo}/>
+            inputValue = {inputValue}
+            setInputValue = {setInputValue}
+            addTodoHandler = {addTodoHandler} />
 
           <Buttoncomponent 
             show={show} 
-            item={arr} 
-            handleEdit={handleEdit} 
+            item={todos} 
+            handleEdit={handleSaveEdit} 
             addTodoHandler={addTodoHandler} />
 
-            {/* <Addtext/>
-            <Buttoncomponent/> */}
         </div>   
-          <TodoList arr={arr} startEditing={startEditing} handleDelete={handleDelete} checkBoxOnChange={checkBoxOnChange}
-            editedTodo={editedTodo} setEditedTodo={setEditedTodo}/>
+          <TodoList 
+            arr={todos} 
+            editId={editId} 
+            inputValue={inputValue} 
+            setInputValue={setInputValue} 
+            startEditing={handleEditTodo} 
+            handleDelete={handleDelete} 
+            checkBoxOnChange={checkBoxOnChange} />
       </div>
     </>
   );
