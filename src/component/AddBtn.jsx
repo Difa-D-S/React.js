@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useContext } from 'react'
 // import Button from 'react-bootstrap/Button'
 import styled from 'styled-components'
+import { context } from '../Context';
 
 const Buttonadd = styled.button`
   border:none;
@@ -19,10 +20,12 @@ const Buttonadd = styled.button`
                                     
 
 
-const AddBtn = ({addTodoHandler}) => {
+const AddBtn = () => {
+
+  const values = useContext(context);
   return (
     <>
-        <Buttonadd onClick={addTodoHandler}> Add </Buttonadd>
+        <Buttonadd onClick={values.addTodoHandler}> Add </Buttonadd>
     </>
   )
 }

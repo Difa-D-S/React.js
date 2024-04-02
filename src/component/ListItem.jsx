@@ -1,34 +1,33 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import TodoCheckBox from './TodoCheckBox'
 import EditDeleteBtn from './EditDeleteBtn'
+import { context } from '../Context'
 
-const ListItem = ({item, editId, inputValue, setInputValue, startEditing, handleDelete, checkBoxOnChange}) => {
+const ListItem = ({item}) => {
+
+  const values = useContext(context);
   return (
     <>
         <li key={item.id} className='list-value'> 
             <div>
-                <TodoCheckBox 
-                  item={item} 
-                  checkBoxOnChange={checkBoxOnChange}/> 
+
+                <TodoCheckBox item={item} /> 
                
-              {editId === item.id ? (
+              {values.editId === item.id ? (
                 <input
                   type='text'
-                  value={inputValue}
-                  onChange={(e) => setInputValue(e.target.value)}
+                  // value={values.inputValue}
+                  // onChange={(e) => values.setInputValue(e.target.value)}
                   // onBlur={() => handleSaveEdit(item.id)}
                 />
               ) : (
                 <span>{item.title}</span>
               )}
+              
             </div>
             
             <div>
-                <EditDeleteBtn 
-                  item={item} 
-                  startEditing={startEditing} 
-                  handleDelete={handleDelete}
-                  />
+                <EditDeleteBtn item={item} />
             </div>
         </li>
     </>

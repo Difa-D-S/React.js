@@ -1,16 +1,16 @@
-import React from 'react'
+import React, { useContext } from 'react'
 
 import ListItem from './ListItem'
+import { context } from '../Context'
 
-const TodoList = ({arr, startEditing,editedTodo, setEditedTodo, handleDelete, checkBoxOnChange, 
-  editId, inputValue, setInputValue}) => {
+const TodoList = () => {
+  const values = useContext(context)
   return (
     <>
         <ul className='del-list'>
-      {arr.map((item) => (
+      {values.todos.map((item) => (
         
-      <ListItem item={item} editId={editId} inputValue={inputValue} setInputValue={setInputValue} startEditing={startEditing} handleDelete={handleDelete} checkBoxOnChange={checkBoxOnChange}
-        editedTodo={editedTodo} setEditedTodo={setEditedTodo}/>
+      <ListItem item={item} />
 
     ))}
     </ul>

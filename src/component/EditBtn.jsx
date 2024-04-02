@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useContext } from 'react'
 // import Button from 'react-bootstrap/Button'
 import styled from 'styled-components'
+import { context } from '../Context'
 
 const Buttonedit = styled.button`
   border:none;
@@ -17,10 +18,11 @@ const Buttonedit = styled.button`
     color:white;
   }`
 
-const EditBtn = ({item, handleEdit}) => {
+const EditBtn = () => {
+  const values = useContext(context)
   return (
     <>
-        <Buttonedit onClick={() => handleEdit(item.id)} > Edit </Buttonedit>
+        <Buttonedit onClick={() => values.handleSaveEdit(values.editId)} > Edit </Buttonedit>
     </>
   )
 }

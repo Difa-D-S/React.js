@@ -1,13 +1,13 @@
 import React, { useContext, useEffect, useRef } from 'react'
-// import {context} from '../Context'
+import {context} from '../Context'
 
-const Addtext = ({inputValue, setInputValue, addTodoHandler}) => {
+const Addtext = () => {
 
-  // const values = useContext(context)
+  const values = useContext(context)
 
   const onkeyDown = (event) => {
     if(event.key === "Enter") {
-      addTodoHandler();
+      values.addTodoHandler();
     }
   }
 
@@ -19,8 +19,8 @@ const Addtext = ({inputValue, setInputValue, addTodoHandler}) => {
 
   return (
     <>
-        <input className="todo-input" type="text" placeholder="Enter your todo" value = {inputValue}
-         onChange={(e) => setInputValue(e.target.value)} onKeyDown={onkeyDown} ref={addTodoInput}></input>
+        <input className="todo-input" type="text" placeholder="Enter your todo" value = {values.inputValue}
+         onChange={(e) => values.setInputValue(e.target.value)} onKeyDown={onkeyDown} ref={addTodoInput}></input>
     </>
   )
 }

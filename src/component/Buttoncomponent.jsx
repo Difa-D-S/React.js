@@ -1,18 +1,21 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import AddBtn from './AddBtn'
 import EditBtn from './EditBtn'
+import {context} from '../Context'
 
 
-const Buttoncomponent = ({show,item, addTodoHandler, handleEdit}) => {
+const Buttoncomponent = () => {
+
+  const values = useContext(context)
   
   return (
     <>
-        {show ? ( 
-      <div>
-        <AddBtn addTodoHandler={addTodoHandler} />
-      </div> ) : (
+      {values.show ? ( 
         <div>
-        <EditBtn handleEdit={handleEdit} item = {item}/>
+          <AddBtn />
+        </div> ) : (
+          <div>
+          <EditBtn />
         </div>
       ) }
     </>
