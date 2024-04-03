@@ -3,11 +3,11 @@ import { context } from '../Context'
 
 const TodoCheckBox = ({item}) => {
 
-  const values = useContext(context)
+  const {checkBoxOnChange} = useContext(context)
 
   return (
     <>
-        <input type='checkbox' className='checkbox' checked={item.completed} onChange={() => values.checkBoxOnChange(item.id)}></input>
+        <input type='checkbox' className='checkbox' checked={item.completed} onChange={() => checkBoxOnChange(item.id)}></input>
     </>
   )
 }
