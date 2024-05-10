@@ -4,19 +4,17 @@ const Addtext = () => {
 
   const [todo, setTodo] = useState([]);
   const date = new Date();
-  const [inputValue, setInputValue] = useState("");
-  const [inputDesc, setInputDesc] = useState("");
+  const [input, setInput] = useState({title: '', description: ''});
 
   const addHandler = () => {
     const arrtodo = {
-      id: Math.random() * 20,
-      title: inputValue,
-      description: inputDesc,
+      id: Math.random() * 2000,
+      title: input.title,
+      description: input.description,
       createdDate: `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`,
     };
     setTodo([...todo, arrtodo]);
-    setInputValue("");
-    setInputDesc("");
+    setInput({title: '', description: ''});
   };
 
   const handleRemoveTask = (taskId) => {
@@ -27,12 +25,12 @@ const Addtext = () => {
     <>
       <div className='list-add'>
       <div className='list'>
-        <input type="text" className="w-100 p-1" value={inputValue} placeholder='Title'
-          onChange={(e) => { setInputValue(e.target.value) }} />
+        <input type="text" className="w-100 p-1" value={input.title} placeholder='Title'
+          onChange={(e) => { setInput({...input, title: e.target.value}) }} />
 
         <input  className="w-100 my-3 p-1" style={{textAlign: "justify"}}
-          type="text" value={inputDesc} placeholder='Description'
-          onChange={(e) => { setInputDesc(e.target.value) }} />
+          type="text" value={input.description} placeholder='Description'
+          onChange={(e) => {setInput({...input, description: e.target.value}) }} />
 
         <button className="bg-primary p-2 w-100 text-white border rounded-lg"
           onClick={addHandler} > ADD </button>
@@ -54,8 +52,8 @@ const Addtext = () => {
                 <button onClick={() => handleRemoveTask(task.id)} className="bg-danger p-2 w-100 text-white">
                     delete
                 </button>
-                <hr/>
               </span>
+              <hr></hr>
           </li>
         ))}
       </div>
