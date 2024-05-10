@@ -3,56 +3,21 @@
   padding:0;
 }
 
-.todo-input{
-  border: 2px solid black;
-  border-radius: 8px;
-  margin-bottom: 10px;
-  padding: 5px;
-}
-
 .list{
   margin: 40px;
-  border: 2px solid green;
-  width: 300px;
+  border: 2px solid white;
+  box-shadow:
+    inset 0 -3em 3em rgb(0 200 0 / 30%),
+    0 0 0 2px white,
+    0.3em 0.3em 1em rgb(200 0 0 / 60%);
+  width: 500px;
   padding: 10px;
 }
 
-/* .arr-click{
-  border-radius: 0 8px 8px 0 !important;
-  margin-left: -10px;
-  margin-bottom: 10px;
-  height: 37px;
-} */
-
-.del-list{
-  padding-left: 0;
-}
-
-.list-value{
-  list-style-type: none;
+.list-add{
   display: flex;
-  justify-content: space-between;
+
   align-items: center;
-  padding: 0 10px;
-}
-
-.flex{
-  display: flex;
   justify-content: center;
-  align-items: centers;
+ 
 }
-
-.del-icon{
-  color:red;
-  background:transparent;
-  border: none;
-  padding: 2px 6px;
-}
-
-.btn-primary:hover{
-  background-color: red;
-  color:white;
-  --bs-btn-active-color: white;
-  --bs-btn-active-bg: red;
-}
-
